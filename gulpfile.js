@@ -4,9 +4,8 @@ const cssmin = require('gulp-cssmin');
 const rename = require("gulp-rename");
 
 function cssminFn() {
-  return src(["./lib/index.css"])
+  return src(["./lib/index.min.css"])
     .pipe(cssmin())
-    .pipe(rename({ suffix: ".min" }))
     .pipe(dest("./lib"));
 }
 

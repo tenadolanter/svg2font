@@ -8,14 +8,15 @@ const CreateEot = require('./utils/CreateEot.js');
 const CreateWoff = require('./utils/CreateWoff.js');
 const CreateWoff2 = require('./utils/CreateWoff2.js');
 const CreateCss = require('./utils/CreateCss.js');
+const CreateConfig = require('./utils/CreateConfig.js');
 const CreateExample = require('./utils/CreateExample.js');
 const defaultOptions = {
   src: path.join(process.cwd(), 'src/svgs'),
   dist: path.join(process.cwd(), 'lib'),
   cleanDist: true,
   config: path.join(process.cwd(), 'src/config.json'),
-  fontName: 'iconfont',
-  prefix: "icon-",
+  fontName: 'tenado-icons',
+  prefix: "te-icon-",
   svgicons2svgfont: {
     fontHeight: 1000,
     normalize: true
@@ -36,6 +37,7 @@ const fn = async (options = {}) => {
   await CreateWoff(opts, ttf);
   await CreateWoff2(opts, ttf);
   await CreateCss(opts);
+  await CreateConfig(opts);
   if(opts.example) {
     await CreateExample(opts);
   }

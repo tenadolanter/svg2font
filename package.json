@@ -1,7 +1,7 @@
 {
   "name": "@tenado/svg2font",
-  "version": "1.0.0",
-  "description": "A easy way to use svg icons in your project !",
+  "version": "1.0.2",
+  "description": "A easy way to use svg icons in your project!",
   "keywords": [
     "svg",
     "icon",
@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "serve": "cross-env npm run build && cp-cli lib example/lib && gulp build && node ./src/serve.js",
-    "build": "cross-env node ./src/index.js"
+    "build": "cross-env node ./src/index.js && gulp build"
   },
   "repository": {
     "type": "git",

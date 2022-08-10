@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const endOfLine = require("os").EOL;
 module.exports = function CreateCss(options){
   return new Promise((resolve, reject) => {
     let codeMap = {};
@@ -23,23 +24,28 @@ module.exports = function CreateCss(options){
       url('index.ttf?t=${new Date().getTime()}') format('truetype'),
       url('index.svg?t=${new Date().getTime()}') format('svg');
 }
-.iconfont {
+[class*=" ${options.prefix}"],[class^=${options.prefix}] {
   font-family: "${options.fontName}" !important;
-  font-size: 16px;
+  speak: none;
+  font-size: 1em;
   font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  vertical-align: baseline;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-    `
+}`
     for(let key in codeMap) {
       const value =(codeMap[key])?.toString(16);
       const iconStr =
-`.${options.prefix}${key}:before {
+`${endOfLine}.${options.prefix}${key}:before {
   content: "\\0${value}";
 }`
       fontStr = fontStr + iconStr;
     }
-    const indexCss = path.join(options.dist, 'index.css')
+    const indexCss = path.join(options.dist, 'index.min.css')
     fs.writeFile(indexCss, fontStr, {encoding: 'utf8'}, err => {
       if(err) throw err;
       console.log(`Wrote ${indexCss}`);
