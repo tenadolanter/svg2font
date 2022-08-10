@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../lib/index.css">
+</head>
+<body>
+  <div class="main">
+    <div class="header">icon</div>
+    <ul class="icon_lists" id="icon_lists">
+      <li class="icon_item" aria-copy="<span class='iconfont icon-act_home'></span>">
+        <span class="example-icon iconfont icon-act_home"></span>
+        <div class="name">act_home</div>
+      </li><li class="icon_item" aria-copy="<span class='iconfont icon-book'></span>">
+        <span class="example-icon iconfont icon-book"></span>
+        <div class="name">book</div>
+      </li><li class="icon_item" aria-copy="<span class='iconfont icon-classify'></span>">
+        <span class="example-icon iconfont icon-classify"></span>
+        <div class="name">classify</div>
+      </li><li class="icon_item" aria-copy="<span class='iconfont icon-color-pick'></span>">
+        <span class="example-icon iconfont icon-color-pick"></span>
+        <div class="name">color-pick</div>
+      </li><li class="icon_item" aria-copy="<span class='iconfont icon-down-arrow'></span>">
+        <span class="example-icon iconfont icon-down-arrow"></span>
+        <div class="name">down-arrow</div>
+      </li><li class="icon_item" aria-copy="<span class='iconfont icon-hpsetting'></span>">
+        <span class="example-icon iconfont icon-hpsetting"></span>
+        <div class="name">hpsetting</div>
+      </li>
+    </ul>
+  </div>
+</body>
+<style>
+ul,li{
+  margin: 0;
+  padding: 0;
+}
+.main {
+  padding: 30px 100px;
+  width: 960px;
+  margin: 0 auto;
+}
+.header {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.icon_lists {
+  width: 100% !important;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.icon_item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  cursor: pointer;
+}
+.example-icon {
+  font-size: 42px;
+  color: #333;
+  height: 100px;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: font-size 0.25s linear, width 0.25s linear;
+}
+</style>
+<script>
+window.onload = function(){
+  const btn = document.querySelector('#icon_lists');
+  btn.addEventListener('click',(e) => {
+    var event = e || window.event;
+    var target = event.target || event.srcElement;
+    while(!target.matches('li.icon_item')){
+      target = target.parentNode;
+    }
+    const copyValue = target.getAttribute('aria-copy');
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(copyValue);
+    } else {
+      const input = document.createElement('input');
+      input.setAttribute('readonly', 'readonly');
+      input.style.position = 'absolute';
+      input.style.clip = 'rect(0 0 0 0)';
+      input.value = copyValue;
+      document.body.appendChild(input);
+      input.select();
+      if (typeof document.execCommand === "function") {
+        document.execCommand('copy', true);
+      }
+      document.body.removeChild(input);
+    }
+  })
+}
+</script>
+</html>
