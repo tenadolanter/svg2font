@@ -10,21 +10,21 @@ module.exports = function CreateSvg(options){
       fontHeight: 1000,
       normalize: true,
       ...options.svgicons2svgfont,
-      fontName: options.fontName,
+      fontName: options.fontFamily,
     });
     //  Setting the unicodes
     try {
-      cache = JSON.parse(fs.readFileSync(options.config, {encoding: 'utf8'}));
+      cache = JSON.parse(fs.readFileSync(options.svgConfig, {encoding: 'utf8'}));
       startUnicode = Math.max(...Object.values(cache).map(Number), startUnicode) + 1;
     } catch(err) {
       if(err.code === 'ENOENT') {
-        console.log(`'${options.config}' not found, new code points will be generated`);
+        console.log(`'${options.svgConfig}' not found, new code points will be generated`);
       } else {
         throw err;
       }
     }
     // Setting the font destination
-    const dist_path = path.join(options.dist, 'index.svg')
+    const dist_path = path.join(options.outputPath, 'index.svg')
     fontStream.pipe(fs.createWriteStream(dist_path))
       .on('finish', function () {
         console.log('svg font successfully created!');
@@ -57,7 +57,7 @@ module.exports = function CreateSvg(options){
       unicodes[name] = code;
       return [unicode];
     }
-    filterSvgFiles(options.src).forEach(svg => {
+    filterSvgFiles(options.inputPath).forEach(svg => {
       if (typeof svg !== 'string') return false;
       // Writing glyphs
       const svg_name = path.basename(svg, '.svg');
@@ -68,9 +68,9 @@ module.exports = function CreateSvg(options){
       };
       fontStream.write(glyph);
     })
-    fs.writeFile(options.config, JSON.stringify(unicodes, null, 4), {encoding: 'utf8'}, err => {
+    fs.writeFile(options.svgConfig, JSON.stringify(unicodes, null, 4), {encoding: 'utf8'}, err => {
       if(err) throw err;
-      console.log(`Wrote ${options.config}`);
+      console.log(`Wrote ${options.svgConfig}`);
     });
     // end the stream
     fontStream.end();

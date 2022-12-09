@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%- options.fontName -%>, A easy way to use svg icons in your project</title>
+  <title><%- options.fontFamily -%>, A easy way to use svg icons in your project</title>
   <link rel="stylesheet" href="./lib/index.min.css">
 </head>
 <body>
   <div class="main">
     <div class="header">icons</div>
     <ul class="icon_lists" id="icon_lists">
-      <% icons.forEach(function(icon){ %><li class="icon_item" aria-copy="<span class='<%- options.prefix -%><%- icon -%>'></span>">
-        <span class="example-icon <%- options.prefix -%><%- icon -%>"></span>
+      <% icons.forEach(function(icon){ %><li class="icon_item" aria-copy="<span class='<%- options.fontPrefix -%><%- icon -%>'></span>">
+        <span class="example-icon <%- options.fontPrefix -%><%- icon -%>"></span>
         <div class="example-name"><%- icon -%></div>
       </li>
       <% }); %>
