@@ -6,10 +6,10 @@ module.exports = function CreateConfig(options){
     let codeMap = {};
     // get config
     try {
-      codeMap = JSON.parse(fs.readFileSync(options.config, {encoding: 'utf8'}));
+      codeMap = JSON.parse(fs.readFileSync(options.svgConfig, {encoding: 'utf8'}));
     } catch(err) {
       if(err.code === 'ENOENT') {
-        console.log(`'${options.config}' not found, new code points will be generated`);
+        console.log(`'${options.svgConfig}' not found, new code points will be generated`);
       } else {
         throw err;
       }
@@ -23,12 +23,12 @@ module.exports = function CreateConfig(options){
   "id": "${codeMap[key]}",
   "unicode": "${value}",
   "name": "${key}",
-  "fontClass": "${options.prefix}${key}"
+  "fontClass": "${options.fontPrefix}${key}"
 }`
       fontStr.push(iconStr);
     }
     fontStr = `[${fontStr.join(",")}]`;
-    const indexCss = path.join(options.dist, 'config.json')
+    const indexCss = path.join(options.outputPath, 'config.json')
     fs.writeFile(indexCss, fontStr, {encoding: 'utf8'}, err => {
       if(err) throw err;
       console.log(`Wrote ${indexCss}`);

@@ -1,6 +1,6 @@
 {
   "name": "@tenado/svg2font",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A easy way to use svg icons in your project!",
   "keywords": [
     "svg",
@@ -8,8 +8,12 @@
     "font"
   ],
   "main": "lib/index.min.css",
+  "bin": {
+    "svg2font": "bin/svg2font"
+  },
   "files": [
-    "lib"
+    "lib",
+    "bin"
   ],
   "scripts": {
     "serve": "cross-env npm run build && cp-cli lib example/lib && gulp build && node ./src/serve.js",
@@ -17,15 +21,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tenadolanter/icons.git"
+    "url": "git+https://github.com/tenadolanter/svg2font.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tenadolanter/icons/issues"
+    "url": "https://github.com/tenadolanter/svg2font/issues"
   },
-  "homepage": "https://github.com/tenadolanter/icons#readme",
+  "homepage": "https://github.com/tenadolanter/svg2font#readme",
   "devDependencies": {
+    "chalk": "^4.1.1",
+    "commander": "^7.2.0",
     "cp-cli": "^2.0.0",
     "cross-env": "^7.0.3",
     "ejs": "^3.1.8",

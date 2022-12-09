@@ -1,15 +1,14 @@
 const ejs = require('ejs');
-const path = require('path');
 const fs = require('fs');
-const outPath = path.join(process.cwd(), 'example/index.html')
 module.exports = function CreateExample(options){
+  const outPath = options.examplePath;
   // 获取所有icon列表
   let codeMap = {};
   try {
-    codeMap = JSON.parse(fs.readFileSync(options.config, {encoding: 'utf8'}));
+    codeMap = JSON.parse(fs.readFileSync(options.svgConfig, {encoding: 'utf8'}));
   } catch(err) {
     if(err.code === 'ENOENT') {
-      console.log(`'${options.config}' not found, new code points will be generated`);
+      console.log(`'${options.svgConfig}' not found, new code points will be generated`);
     } else {
       throw err;
     }
