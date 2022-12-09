@@ -38,7 +38,7 @@ module.exports = function CreateCss(options){
       -moz-osx-font-smoothing: grayscale;
     }`
     for(let key in codeMap) {
-      const value =(codeMap[key])?.toString(16);
+      const value =(codeMap[key]).toString(16);
       const iconStr =
       `${endOfLine}.${options.fontPrefix}${key}:before {
         content: "\\0${value}";
