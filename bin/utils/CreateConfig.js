@@ -17,7 +17,7 @@ module.exports = function CreateConfig(options){
     // generate css
     let fontStr = [];
     for(let key in codeMap) {
-      const value =(codeMap[key])?.toString(16);
+      const value =(codeMap[key]).toString(16);
       const iconStr =
 `${endOfLine}{
   "id": "${codeMap[key]}",
