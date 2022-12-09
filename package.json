@@ -1,6 +1,6 @@
 {
   "name": "@tenado/svg2font",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A easy way to use svg icons in your project!",
   "keywords": [
     "svg",
