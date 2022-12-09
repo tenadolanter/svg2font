@@ -4,16 +4,6 @@ A easy way to use svg icons in your project!
 
 ## Get Start
 
-两种使用方式
-
-### 1、作为一个npm包使用
-
-```text
-npm install @tenado/svg2font -S
-```
-
-### 2、命令行方式运行
-
 ```text
 # 安装依赖
 npm install @tenado/svg2font -D
@@ -22,20 +12,36 @@ npm install @tenado/svg2font -D
 svg2font -o ./src/options.json
 ```
 
+示例：
+
+在package.json里面添加一个命令`build:svg: svg2font -o ./src/options.json`
+
+配置文件options.json：
+
+```json
+{
+  "inputPath": "src/assets/svgs",
+  "outputPath": "src/assets/font",
+  "svgConfig": "src/assets/svg-config.json",
+  "fontFamily": "tenado-icons",
+  "fontPrefix": "tenado-icon-"
+}
+```
+
 ## How to Use
 
 ### 在入口文件引入css
 
 ```text
 # src/main.js
-import "/lib/index.min.css";
+import "./src/assets/font/index.min.css";
 ```
 
 ### 使用 `i` 或者 `span` 标签，且把svg名称作为类名
 
 example：
 
-`<span class="te-icon-color-pick"></span>`
+`<span class="tenado-icon-color-pick"></span>`
 
 ## Options
 
