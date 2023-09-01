@@ -1,8 +1,0 @@
-{
-  "inputPath": "src/svgs",
-  "outputPath": "lib",
-  "svgConfig": "src/config.json",
-  "example": true,
-  "ejs": "src/index.ejs",
-  "examplePath": "example/index.html"
-}

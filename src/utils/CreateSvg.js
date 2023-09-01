@@ -1,10 +1,11 @@
 const fs = require('fs');
 const path = require('path');
+const prettier = require("prettier");
 const SVGIcons2SVGFontStream =require('svgicons2svgfont');
 module.exports = function CreateSvg(options){
   let startUnicode = 59905;
   let unicodes = {};
-  let cache = {};
+  let cache = [];
   return new Promise((resolve, reject) => {
     const fontStream = new SVGIcons2SVGFontStream({
       fontHeight: 1000,
@@ -12,18 +13,18 @@ module.exports = function CreateSvg(options){
       ...options.svgicons2svgfont,
       fontName: options.fontFamily,
     });
-    //  Setting the unicodes
+    const svgConfigPath = path.join(options.outputPath, "config.json")
     try {
-      cache = JSON.parse(fs.readFileSync(options.svgConfig, {encoding: 'utf8'}));
-      startUnicode = Math.max(...Object.values(cache).map(Number), startUnicode) + 1;
+      cache = JSON.parse(fs.readFileSync(svgConfigPath, {encoding: 'utf8'}));
+      const iconUnicodes = cache.map(item => Number(item.id));
+      startUnicode = Math.max(...iconUnicodes, startUnicode) + 1;
     } catch(err) {
       if(err.code === 'ENOENT') {
-        console.log(`'${options.svgConfig}' not found, new code points will be generated`);
+        console.log(`'${svgConfigPath}' not found, new code points will be generated`);
       } else {
         throw err;
       }
     }
-    // Setting the font destination
     const dist_path = path.join(options.outputPath, 'index.svg')
     fontStream.pipe(fs.createWriteStream(dist_path))
       .on('finish', function () {
@@ -34,7 +35,7 @@ module.exports = function CreateSvg(options){
         console.log(err);
         reject(err);
       });
-    // get svgs
+    // 获取入口文件下的所有svg文件
     const filterSvgFiles = (svgPath) => {
       const files = fs.readdirSync(svgPath, 'utf-8');
       if (!files) {
@@ -42,7 +43,7 @@ module.exports = function CreateSvg(options){
       }
       const resArr = [];
       for(const i in files){
-        // if not a svg file, loop continue
+        // 如果不是svg文件，则继续循环
         if(typeof files[i] !== 'string' || path.extname(files[i]) !== '.svg') continue;
         if(!~resArr.indexOf(files[i])) {
           resArr.push(path.join(svgPath, files[i]));
@@ -50,16 +51,17 @@ module.exports = function CreateSvg(options){
       }
       return resArr;
     }
-    // get icon unicode
+
+    // 获取icon的unicode
     const getUnicode = (name) => {
-      const code = cache[name] || startUnicode++;
+      const iconUnicode = cache?.find(item => item.name === name)?.id;
+      const code = iconUnicode ? Number(iconUnicode): startUnicode++;
       const unicode = String.fromCharCode(code);
       unicodes[name] = code;
       return [unicode];
     }
     filterSvgFiles(options.inputPath).forEach(svg => {
       if (typeof svg !== 'string') return false;
-      // Writing glyphs
       const svg_name = path.basename(svg, '.svg');
       const glyph = fs.createReadStream(svg);
       glyph.metadata = {
@@ -68,11 +70,27 @@ module.exports = function CreateSvg(options){
       };
       fontStream.write(glyph);
     })
-    fs.writeFile(options.svgConfig, JSON.stringify(unicodes, null, 4), {encoding: 'utf8'}, err => {
+
+    // 生成config.json文件
+    let fontStr = [];
+    for(let key in unicodes) {
+      const value =(unicodes[key]).toString(16);
+      const iconStr =
+      `{
+        "id": "${unicodes[key]}",
+        "unicode": "${value}",
+        "name": "${key}",
+        "fontClass": "${options.fontPrefix}${key}"
+      }`
+      fontStr.push(iconStr);
+    }
+    fontStr = `[${fontStr.join(",")}]`;
+    const indexCss = path.join(options.outputPath, 'config.json')
+    fontStr = prettier.format(fontStr, { parser: 'json' })
+    fs.writeFile(indexCss, fontStr, {encoding: 'utf8'}, err => {
       if(err) throw err;
-      console.log(`Wrote ${options.svgConfig}`);
+      console.log(`Wrote ${indexCss}`);
     });
-    // end the stream
     fontStream.end();
   })
 }

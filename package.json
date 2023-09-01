@@ -1,22 +1,23 @@
 {
   "name": "@tenado/svg2font",
-  "version": "1.0.4",
-  "description": "svg2font 是一个简单易用的命令行工具，用于定义自己的字体图标库",
+  "version": "1.0.5",
+  "description": "根据svg生成字体图标库，可以内置在项目中的脚手架工具",
   "keywords": [
     "svg",
     "icon",
     "font"
   ],
-  "main": "lib/index.min.css",
   "bin": {
     "svg2font": "bin/svg2font"
   },
   "files": [
-    "bin"
+    "bin",
+    "src"
   ],
   "scripts": {
-    "serve": "cross-env npm run build && cp-cli lib example/lib && gulp build && node ./src/serve.js",
-    "build": "cross-env node ./src/index.js && gulp build"
+    "init": "node ./bin/svg2font init",
+    "build": "node ./bin/svg2font sync",
+    "example": "node ./bin/svg2font example"
   },
   "repository": {
     "type": "git",
@@ -29,22 +30,20 @@
   },
   "homepage": "https://github.com/tenadolanter/svg2font#readme",
   "dependencies": {
+    "chalk": "^4.1.1",
+    "commander": "^7.2.0",
+    "inquirer": "^6.5.2",
+    "open": "^7.4.2",
+    "prettier": "^2.8.8",
     "svg2ttf": "^6.0.3",
     "svgicons2svgfont": "^10.0.5",
     "svgtofont": "^3.14.0",
     "ttf2eot": "^3.0.0",
     "ttf2woff": "^3.0.0",
-    "ttf2woff2": "^4.0.4",
-    "chalk": "^4.1.1",
-    "commander": "^7.2.0"
+    "ttf2woff2": "^4.0.4"
   },
   "devDependencies": {
-    "cp-cli": "^2.0.0",
-    "cross-env": "^7.0.3",
     "ejs": "^3.1.8",
-    "express": "^4.18.1",
-    "gulp": "^4.0.2",
-    "gulp-cssmin": "^0.2.0",
-    "gulp-rename": "^2.0.0"
+    "express": "^4.18.1"
   }
 }

@@ -1,22 +1,20 @@
-const path = require('path');
-const fs = require('fs');
-const endOfLine = require("os").EOL;
-module.exports = function CreateCss(options){
+const path = require("path");
+const fs = require("fs");
+const prettier = require("prettier");
+module.exports = function CreateCss(options) {
   return new Promise((resolve, reject) => {
-    let codeMap = {};
-    // get config
+    let svgConfigs = [];
+    // 获取配置
     try {
-      codeMap = JSON.parse(fs.readFileSync(options.svgConfig, {encoding: 'utf8'}));
-    } catch(err) {
-      if(err.code === 'ENOENT') {
-        console.log(`'${options.svgConfig}' not found, new code points will be generated`);
-      } else {
-        throw err;
-      }
+      const scgConfigPath = path.join(options.outputPath, "config.json")
+      svgConfigs = JSON.parse(
+        fs.readFileSync(scgConfigPath, { encoding: "utf8" })
+      );
+    } catch (err) {
+      throw err;
     }
-    // generate css
-    let fontStr =
-    `@font-face {
+    // 生成css
+    let fontStr = `@font-face {
       font-family: "${options.fontFamily}";
       src: url('index.woff2?t=${new Date().getTime()}') format('woff2'),
           url('index.woff?t=${new Date().getTime()}') format('woff'),
@@ -36,20 +34,21 @@ module.exports = function CreateCss(options){
       vertical-align: baseline;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-    }`
-    for(let key in codeMap) {
-      const value =(codeMap[key]).toString(16);
-      const iconStr =
-      `${endOfLine}.${options.fontPrefix}${key}:before {
+    }`;
+    for (let item of svgConfigs) {
+      const value = item.unicode;
+      const key = item.fontClass;
+      const iconStr = `.${key}:before {
         content: "\\0${value}";
-      }`
+      }`;
       fontStr = fontStr + iconStr;
     }
-    const indexCss = path.join(options.outputPath, 'index.min.css')
-    fs.writeFile(indexCss, fontStr, {encoding: 'utf8'}, err => {
-      if(err) throw err;
-      console.log(`Wrote ${indexCss}`);
+    fontStr = prettier.format(fontStr, { parser: "css" });
+    const indexCss = path.join(options.outputPath, "index.min.css");
+    fs.writeFile(indexCss, fontStr, { encoding: "utf8" }, (err) => {
+      if (err) throw err;
+      console.log(`生成 ${indexCss} 成功~~~`);
       resolve();
     });
   });
-}
+};

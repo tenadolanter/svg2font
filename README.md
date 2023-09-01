@@ -1,6 +1,6 @@
 ## 介绍
 
-svg2font 是一个简单易用的命令行工具，用于定义自己的字体图标库。
+svg2font, 根据svg生成字体图标库，可以内置在项目中的脚手架工具
 
 ## 使用
 
@@ -15,41 +15,50 @@ npm install @tenado/svg2font -D
 yarn add @tenado/svg2font -D
 ```
 
-### 2、配置 svg2font.config.js
+### 2、初始化
 
-| 参数       | 说明                                              | 默认值       | 是否可选 |
-| ---------- | ------------------------------------------------- | ------------ | -------- |
-| inputPath  | svg 文件夹路径                                    | ~            | 必填     |
-| svgConfig  | svg icon 配置文件，用于多次生成时候，缓存之前配置 | ~            | 必填     |
-| fontFamily | 字体的名称                                        | tenado-icons | 可选     |
-| fontPrefix | 字体的前缀                                        | te-icon-     | 可选     |
-| outputPath | 生成字体文件存放位置                              | ~            | 必填     |
+执行如下命令，会在项目目录下生成一个`svg2font.config.js`文件，里面记录了脚本执行时候需要的配置
 
-配置文件 svg2font.config.js：
+```bash
+npx svg2font init
+```
+
+### 3、配置 svg2font.config.js
+
+| 参数        | 说明                                                                   | 默认值     | 是否可选 |
+| ----------- | ---------------------------------------------------------------------- | ---------- | -------- |
+| inputPath   | svg 文件夹路径                                                         | ~          | 必填     |
+| outputPath  | 生成字体文件存放位置                                                   | ~          | 必填     |
+| fontFamily  | 字体的名称                                                             | tenadoIcon | 可选     |
+| fontPrefix  | 字体的前缀                                                             | ticon-     | 可选     |
+| ejs         | 生成 icon 列表页面的模板，默认使用系统的，如果需要自定义，则设置该选项 | ~          | 可选     |
+| examplePath | 生成静态文件存放的位置，位置应与 outputPath 在同一目录下               | ~          | 可选     |
+| examplePort | 查看静态文件的端口                                                     | ~          | 可选     |
+
+svg2font.config.js的默认配置如下：
 
 ```json
 {
   "inputPath": "src/assets/svgs",
   "outputPath": "src/assets/font",
-  "svgConfig": "src/assets/svg-config.json",
-  "fontFamily": "tenado-icons",
-  "fontPrefix": "tenado-icon-"
+  "fontFamily": "tenadoIcon",
+  "fontPrefix": "ticon-"
 }
 ```
 
-### 3、转换 svg 成字体文件
+### 4、转换 svg 成字体文件
 
 ```bash
 npx svg2font
 ```
 
-### 4、引入字体文件 css
+### 5、项目 main 文件中引入字体文件 css
 
 ```js
 // src/main.js
 import "./src/assets/font/index.min.css";
 ```
 
-### 5、在项目中使用字体图标
+### 6、在项目中使用字体图标
 
-使用 `i` 或者 `span` 标签，且把 svg 名称作为类名，例如`<span class="tenado-icon-color-pick"></span>`
+使用 `i` 或者 `span` 标签，且把 svg 名称作为类名，例如`<span class="ticon-color-pick"></span>`
