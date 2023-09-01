@@ -1,109 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%- options.fontFamily -%>, A easy way to use svg icons in your project</title>
-  <link rel="stylesheet" href="./lib/index.min.css">
-</head>
-<body>
-  <div class="main">
-    <div class="header">icons</div>
-    <ul class="icon_lists" id="icon_lists">
-      <% icons.forEach(function(icon){ %><li class="icon_item" aria-copy="<span class='<%- options.fontPrefix -%><%- icon -%>'></span>">
-        <span class="example-icon <%- options.fontPrefix -%><%- icon -%>"></span>
-        <div class="example-name"><%- icon -%></div>
-      </li>
-      <% }); %>
-    </ul>
-  </div>
-</body>
-<style>
-ul,li{
-  margin: 0;
-  padding: 0;
-}
-.main {
-  padding: 30px 0;
-  width: 1010px;
-  margin: 0 auto;
-}
-.header {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 16px;
-}
-.icon_lists {
-  width: 100% !important;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  border-left: 1px solid #eaeefb;
-  border-top: 1px solid #eaeefb;
-}
-.icon_item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  cursor: pointer;
-  border-right: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-  width: 100px;
-  height: 120px;
-  overflow: hidden;
-}
-.example-icon {
-  font-size: 36px;
-  color: #333;
-  height: 100px;
-  width: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: font-size 0.25s linear, width 0.25s linear;
-}
-.example-name {
-  font-size: 12px;
-  color: #99a9bf;
-  height: 20px;
-  overflow: hidden;
-  padding: 0 8px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  width: 100%;
-  text-align: center;
-}
-</style>
-<script>
-window.onload = function(){
-  const btn = document.querySelector('#icon_lists');
-  btn.addEventListener('click',(e) => {
-    var event = e || window.event;
-    var target = event.target || event.srcElement;
-    while(!target.matches('li.icon_item')){
-      target = target.parentNode;
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      您的自定义字体图标库
+    </title>
+    <link rel="stylesheet" href="<%- cssPath -%>" />
+  </head>
+  <body>
+    <div class="main">
+      <div class="header">您的自定义字体图标库，由@tenado/svg2font脚手架生成</div>
+      <ul class="icon_lists" id="icon_lists">
+        <% icons.forEach(function(icon){ %><li
+          class="icon_item"
+          aria-copy="<span class='<%- options.fontPrefix -%><%- icon.name -%>'></span>"
+        >
+          <span
+            class="example-icon <%- options.fontPrefix -%><%- icon.name -%>"
+          ></span>
+          <div class="example-name"><%- icon.name -%></div>
+          <div class="icon-cover">
+            <div class="icon-cover-text">复制代码</div>
+          </div>
+        </li>
+        <% }); %>
+      </ul>
+    </div>
+  </body>
+  <style>
+    ul,
+    li {
+      margin: 0;
+      padding: 0;
     }
-    const copyValue = target.getAttribute('aria-copy');
-    if (navigator.clipboard) {
-        navigator.clipboard.writeText(copyValue);
-    } else {
-      const input = document.createElement('input');
-      input.setAttribute('readonly', 'readonly');
-      input.style.position = 'absolute';
-      input.style.clip = 'rect(0 0 0 0)';
-      input.value = copyValue;
-      document.body.appendChild(input);
-      input.select();
-      if (typeof document.execCommand === "function") {
-        document.execCommand('copy', true);
-      }
-      document.body.removeChild(input);
+    .main {
+      padding: 30px 0;
+      width: 1010px;
+      margin: 0 auto;
     }
-  })
-}
-</script>
+    .header {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .icon_lists {
+      width: 100% !important;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      border-left: 1px solid #eaeefb;
+      border-top: 1px solid #eaeefb;
+    }
+    .icon_item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      cursor: pointer;
+      border-right: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      width: 100px;
+      height: 120px;
+      overflow: hidden;
+    }
+    .icon-cover {
+      width: 100%;
+      height: 100%;
+      background: rgba(13, 10, 49, 0.8);
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      overflow: hidden;
+      vertical-align: middle;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: visibility 0.25s linear;
+    }
+    .icon_item:hover .icon-cover {
+      display: flex;
+    }
+    .example-icon {
+      font-size: 36px;
+      color: #333;
+      height: 100px;
+      width: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: font-size 0.25s linear, width 0.25s linear;
+    }
+    .example-name {
+      font-size: 12px;
+      color: #99a9bf;
+      height: 20px;
+      overflow: hidden;
+      padding: 0 8px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 100%;
+      text-align: center;
+    }
+  </style>
+  <script>
+    window.onload = function () {
+      const btn = document.querySelector("#icon_lists");
+      btn.addEventListener("click", (e) => {
+        var event = e || window.event;
+        var target = event.target || event.srcElement;
+        while (!target.matches("li.icon_item")) {
+          target = target.parentNode;
+        }
+        const targetCover = target.querySelector(".icon-cover .icon-cover-text");
+        if(targetCover) {
+          targetCover.style.visibility = "hidden";
+          setTimeout(()=> {
+            targetCover.style.visibility = "visible";
+          }, 300)
+        }
+        const copyValue = target.getAttribute("aria-copy");
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(copyValue);
+        } else {
+          const input = document.createElement("input");
+          input.setAttribute("readonly", "readonly");
+          input.style.position = "absolute";
+          input.style.clip = "rect(0 0 0 0)";
+          input.value = copyValue;
+          document.body.appendChild(input);
+          input.select();
+          if (typeof document.execCommand === "function") {
+            document.execCommand("copy", true);
+          }
+          document.body.removeChild(input);
+        }
+      });
+    };
+  </script>
 </html>

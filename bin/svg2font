@@ -2,8 +2,8 @@
 
 const { red } = require("chalk");
 const { program } = require("commander");
-const genProgram = require("./index.js");
-genProgram(program);
+const cli = require("../src/index.js");
+cli(program);
 program.parseAsync(process.argv).catch(error => {
   console.error(red(error.stack));
   process.exit(1);
