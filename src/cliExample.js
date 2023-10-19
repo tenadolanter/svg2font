@@ -36,8 +36,8 @@ module.exports = async () => {
   }
   const examplePath = options.examplePath;
   const outPath = options.outputPath;
-  const firstExamplePath = examplePath.split("/")?.[0];
-  const firstOutPath = outPath.split("/")?.[0];
+  const firstExamplePath = examplePath.split("/")[0];
+  const firstOutPath = outPath.split("/")[0];
   let cssPath;
   if(firstExamplePath === firstOutPath) {
     const relativePath = outPath.replace(firstOutPath, '');

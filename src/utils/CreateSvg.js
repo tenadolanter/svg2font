@@ -54,7 +54,7 @@ module.exports = function CreateSvg(options){
 
     // 获取icon的unicode
     const getUnicode = (name) => {
-      const iconUnicode = cache?.find(item => item.name === name)?.id;
+      const iconUnicode = (cache.find(item => item.name === name) || {}).id;
       const code = iconUnicode ? Number(iconUnicode): startUnicode++;
       const unicode = String.fromCharCode(code);
       unicodes[name] = code;
