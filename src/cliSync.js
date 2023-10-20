@@ -20,7 +20,7 @@ module.exports = async () => {
   if(!fs.existsSync(options.outputPath)) {
     fs.mkdirSync(options.outputPath, { recursive: true }, (err) => {
       if(err) {
-        console.log(chalk.red(`常见文件夹 ${options.outputPath} 失败\n`));
+        console.log(chalk.red(`创建文件夹 ${options.outputPath} 失败\n`));
         process.exit(1);
       }
     })
