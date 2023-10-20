@@ -7,7 +7,7 @@ on:
 
 jobs:
   auto_release_npm_package:
-    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    if: "!contains(github.event.head_commit.message, 'release')"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,13 +19,11 @@ jobs:
           git config --local user.name "GitHub Action"
           git checkout $CI_COMMIT_REF_NAME
           npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-          npm config set scope "@pawgame"
+          npm config set scope "@tenado"
           npm config list
-          npm ci
-          npm run build
           SPACE_CHAR=" "
-          npx standard-version --releaseCommitMessageFormat "chore(release):${SPACE_CHAR}{{currentTag}} [skip ci]"
+          npx standard-version --releaseCommitMessageFormat "chore(release):${SPACE_CHAR}{{currentTag}}"
           git push --follow-tags origin $CI_COMMIT_REF_NAME
           npm publish --access public
         env:
-            NODE_AUTH_TOKEN: ${{secrets.NPM_NODE_AUTH_TOKEN}}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_NODE_AUTH_TOKEN}}
