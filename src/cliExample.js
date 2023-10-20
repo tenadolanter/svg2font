@@ -14,6 +14,10 @@ module.exports = async () => {
     process.exit(1);
   }
   let options = require(configPath);
+  if(!options.examplePath){
+    console.log(chalk.red(`请检查配置文件，缺少examplePath\n`));
+    process.exit(1);
+  }
   if (!options.ejs) {
     const ejsPath = path.join(__dirname, "./index.ejs");
     options.ejs = ejsPath;

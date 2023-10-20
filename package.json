@@ -40,9 +40,7 @@
     "svgtofont": "^3.14.0",
     "ttf2eot": "^3.0.0",
     "ttf2woff": "^3.0.0",
-    "ttf2woff2": "^4.0.4"
-  },
-  "devDependencies": {
+    "ttf2woff2": "^4.0.4",
     "ejs": "^3.1.8",
     "express": "^4.18.1"
   }
