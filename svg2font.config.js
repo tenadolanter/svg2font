@@ -4,5 +4,6 @@ module.exports = {
   fontFamily: 'tenadoIcon',
   fontPrefix: 'ticon-',
   examplePath: 'example/index.html',
-  examplePort: 9898
+  examplePort: 9898,
+  exampleRun: true,
 };
