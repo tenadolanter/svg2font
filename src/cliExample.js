@@ -39,6 +39,7 @@ module.exports = async () => {
   }
   const examplePath = options.examplePath;
   const outPath = options.outputPath;
+  const exampleRun = options.exampleRun !== undefined ? options.exampleRun : true;
   const findCommonSubstring = (str1, str2) => {
     const len1 = str1.length;
     const len2 = str2.length;
@@ -74,14 +75,16 @@ module.exports = async () => {
       fs.writeFile(examplePath, str, { encoding: "utf8" }, (err) => {
         if (err) throw err;
         console.log(`生成静态页面 ${examplePath}`);
-        const staticPath = examplePath.replace("/index.html", "");
-        app.use(express.static(staticPath));
-        app.listen(options.examplePort, () => {
-          console.log(
-            `server start: http://localhost:${options.examplePort}/`
-          );
-          open(`http://localhost:${options.examplePort}/`)
-        });
+        if(exampleRun) {
+          const staticPath = examplePath.replace("/index.html", "");
+          app.use(express.static(staticPath));
+          app.listen(options.examplePort, () => {
+            console.log(
+              `server start: http://localhost:${options.examplePort}/`
+            );
+            open(`http://localhost:${options.examplePort}/`)
+          });
+        }
       });
     }
   );

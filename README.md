@@ -1,6 +1,6 @@
 ## 介绍
 
-svg2font, 根据svg生成字体图标库，可以内置在项目中的脚手架工具
+svg2font, 根据 svg 生成字体图标库，可以内置在项目中的脚手架工具
 
 ## 使用
 
@@ -34,8 +34,9 @@ npx svg2font init
 | ejs         | 生成 icon 列表页面的模板，默认使用系统的，如果需要自定义，则设置该选项 | ~          | 可选     |
 | examplePath | 生成静态文件存放的位置，位置应与 outputPath 在同一目录下               | ~          | 可选     |
 | examplePort | 查看静态文件的端口                                                     | ~          | 可选     |
+| exampleRun  | 是否启动 example 的静态页面                                            | true       | 可选     |
 
-svg2font.config.js的默认配置如下：
+svg2font.config.js 的默认配置如下：
 
 ```json
 {
@@ -63,9 +64,9 @@ import "./src/assets/font/index.min.css";
 
 使用 `i` 或者 `span` 标签，且把 svg 名称作为类名，例如`<span class="ticon-color-pick"></span>`
 
-### 7、查看当前项目的icon列表
+### 7、查看当前项目的 icon 列表
 
-更改配置文件svg2font.config.js，向里面加入examplePath和examplePort，这里注意examplePath应尽量与outputPath在同一目录下
+更改配置文件 svg2font.config.js，向里面加入 examplePath 和 examplePort，这里注意 examplePath 应尽量与 outputPath 在同一目录下
 
 ```bash
 npx svg2font example
