@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.0.12 (2024-08-30)
+
+
+### Bug Fixes
+
+* 调整生成icon的样式 ([adb5c12](https://github.com/tenadolanter/svg2font/commit/adb5c12f5326dc5fec4338b3b48a1bb864467cf5))
+
 ### 1.0.10 (2023-10-20)
 
 
