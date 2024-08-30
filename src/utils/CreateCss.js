@@ -25,13 +25,13 @@ module.exports = function CreateCss(options) {
     [class*=" ${options.fontPrefix}"],[class^=${options.fontPrefix}] {
       font-family: "${options.fontFamily}" !important;
       speak: none;
-      font-size: 1em;
       font-style: normal;
       font-weight: 400;
       font-variant: normal;
       text-transform: none;
       line-height: 1;
       vertical-align: baseline;
+      display: inline-block;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }`;
