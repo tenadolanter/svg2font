@@ -32,16 +32,15 @@
   "dependencies": {
     "chalk": "^4.1.1",
     "commander": "^7.2.0",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
     "inquirer": "^6.5.2",
     "open": "^7.4.2",
     "prettier": "^2.8.8",
     "svg2ttf": "^6.0.3",
     "svgicons2svgfont": "^10.0.5",
-    "svgtofont": "^3.14.0",
     "ttf2eot": "^3.0.0",
     "ttf2woff": "^3.0.0",
-    "ttf2woff2": "^4.0.4",
-    "ejs": "^3.1.8",
-    "express": "^4.18.1"
+    "ttf2woff2": "^4.0.4"
   }
 }
