@@ -1,6 +1,6 @@
 {
   "name": "@tenado/svg2font",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "根据svg生成字体图标库，可以内置在项目中的脚手架工具",
   "keywords": [
     "svg",
